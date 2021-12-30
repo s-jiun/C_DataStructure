@@ -1,14 +1,13 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #define MAX_SIZE 10
-#define SWAP(x, y, t) ( (t)=(x), (x)=(y), (y)=(t) )
+#define SWAP(x, y, t) ((t) = (x), (x) = (y), (y) = (t))
 
 int partition(int list[], int left, int right)
 {
-	//¿©±â ÄÚµå ¿Ï¼ºÇÏ±â
-	//while¹® »ç¿ë 
 	int pivot, temp;
 	int low, high;
 
@@ -16,14 +15,16 @@ int partition(int list[], int left, int right)
 	high = right;
 	pivot = list[left];
 
-	while (low <= high) {
+	while (low <= high)
+	{
 		while (list[low] < pivot)
 			low++;
-		
+
 		while (list[high] > pivot)
 			high--;
 
-		if (low <= high) {
+		if (low <= high)
+		{
 			SWAP(list[low], list[high], temp);
 			low++;
 			high--;
@@ -35,8 +36,8 @@ int partition(int list[], int left, int right)
 }
 void quick_sort(int list[], int left, int right)
 {
-	//¿©±â ÄÚµå ¿Ï¼º 
-	if (left < right) {
+	if (left < right)
+	{
 		int q = partition(list, left, right);
 		quick_sort(list, left, q - 1);
 		quick_sort(list, q + 1, right);
@@ -54,19 +55,19 @@ void print_list(int list[], int size)
 int main(void)
 {
 	int i, n = MAX_SIZE;
-	int list1[] = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 };
+	int list1[] = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
 	int list2[MAX_SIZE];
 
-	printf("\n<list1(°°Àº¼ö·Î ±¸¼ºµÈ µ¥ÀÌÅÍ)ÀÇ °á°ú Ãâ·Â>\n");
-	quick_sort(list1, 0, n - 1); // ÄüÁ¤·Ä È£Ãâ 
+	printf("\n<list1(ê°™ì€ìˆ˜ë¡œ êµ¬ì„±ëœ ë°ì´í„°)ì˜ ê²°ê³¼ ì¶œë ¥>\n");
+	quick_sort(list1, 0, n - 1);
 	print_list(list1, n);
 
 	srand(time(NULL));
-	for (i = 0; i < n; i++)      	// ³­¼ö »ý¼º ¹× Ãâ·Â 
+	for (i = 0; i < n; i++)
 		list2[i] = rand() % 100;
 
-	printf("\n\n<list2(³­¼ö·Î »ý¼ºµÈ µ¥ÀÌÅÍ)ÀÇ °á°ú Ãâ·Â>\n");
-	quick_sort(list2, 0, n - 1); // ÄüÁ¤·Ä È£Ãâ 
+	printf("\n\n<list2(ë‚œìˆ˜ë¡œ ìƒì„±ëœ ë°ì´í„°)ì˜ ê²°ê³¼ ì¶œë ¥>\n");
+	quick_sort(list2, 0, n - 1);
 	print_list(list2, n);
 
 	return 0;

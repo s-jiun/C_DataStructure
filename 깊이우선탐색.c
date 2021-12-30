@@ -1,4 +1,4 @@
-/*
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,14 +6,16 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef struct GraphType {
+typedef struct GraphType
+{
 	int n;
 	int adj_mat[MAX_VERTICES][MAX_VERTICES];
-}GraphType;
+} GraphType;
 
 int visited[MAX_VERTICES];
 
-void init(GraphType* g) {
+void init(GraphType *g)
+{
 	int r, c;
 	g->n = 0;
 	for (r = 0; r < MAX_VERTICES; r++)
@@ -21,35 +23,41 @@ void init(GraphType* g) {
 			g->adj_mat[r][c] = 0;
 }
 
-void insert_vertex(GraphType* g, int v) {
-	if (((g->n) + 1) > MAX_VERTICES) {
-		fprintf(stderr, "±×·¡ÇÁ: Á¤Á¡ °³¼ö ÃÊ°ú");
+void insert_vertex(GraphType *g, int v)
+{
+	if (((g->n) + 1) > MAX_VERTICES)
+	{
+		fprintf(stderr, "ê·¸ëž˜í”„: ì •ì  ê°œìˆ˜ ì´ˆê³¼");
 		return;
 	}
 	g->n++;
 }
 
-void insert_edge(GraphType* g, int start, int end) {
-	if (start >= g->n || end >= g->n) {
-		fprintf(stderr, "±×·¡ÇÁ: Á¤Á¡ ¹øÈ£ ¿À·ù");
+void insert_edge(GraphType *g, int start, int end)
+{
+	if (start >= g->n || end >= g->n)
+	{
+		fprintf(stderr, "ê·¸ëž˜í”„: ì •ì  ë²ˆí˜¸ ì˜¤ë¥˜");
 		return;
 	}
 	g->adj_mat[start][end] = 1;
 	g->adj_mat[end][start] = 1;
 }
 
-void dfs_mat(GraphType* g, int v) {
+void dfs_mat(GraphType *g, int v)
+{
 	int w;
 	visited[v] = TRUE;
-	printf("Á¤Á¡ %d -> ", v);
+	printf("ì •ì  %d -> ", v);
 	for (w = 0; w < g->n; w++)
 		if (g->adj_mat[v][w] && !visited[w])
 			dfs_mat(g, w);
 }
 
-int main() {
-	GraphType* g;
-	g = (GraphType*)malloc(sizeof(GraphType));
+int main()
+{
+	GraphType *g;
+	g = (GraphType *)malloc(sizeof(GraphType));
 	init(g);
 	for (int i = 0; i < 4; i++)
 		insert_vertex(g, i);
@@ -59,10 +67,9 @@ int main() {
 	insert_edge(g, 1, 2);
 	insert_edge(g, 2, 3);
 
-	printf("±íÀÌ ¿ì¼± Å½»ö\n");
+	printf("ê¹Šì´ ìš°ì„  íƒìƒ‰\n");
 	dfs_mat(g, 0);
 	printf("\n");
 	free(g);
 	return 0;
 }
-*/

@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -8,48 +9,62 @@
 #define MAX_STRING 100
 
 typedef char element;
-typedef struct {
+typedef struct
+{
 	element data[MAX_STACK_SIZE];
 	int top;
 } StackType;
 
-void init_stack(StackType* s) {
+void init_stack(StackType *s)
+{
 	s->top = -1;
 }
 
-int is_empty(StackType* s) {
+int is_empty(StackType *s)
+{
 	return (s->top == -1);
 }
 
-int is_full(StackType* s) {
+int is_full(StackType *s)
+{
 	return (s->top == (MAX_STACK_SIZE - 1));
 }
 
-void push(StackType* s, element item) {
-	if (is_full(s)) {
-		fprintf(stderr, "½ºÅÃ Æ÷È­ ¿¡·¯\n");
+void push(StackType *s, element item)
+{
+	if (is_full(s))
+	{
+		fprintf(stderr, "ìŠ¤íƒ í¬í™” ì—ëŸ¬\n");
 		return;
 	}
-	else s->data[++(s->top)] = item;
+	else
+		s->data[++(s->top)] = item;
 }
 
-element pop(StackType* s) {
-	if (is_empty(s)) {
-		fprintf(stderr, "½ºÅÃ °ø¹é ¿¡·¯\n");
+element pop(StackType *s)
+{
+	if (is_empty(s))
+	{
+		fprintf(stderr, "ìŠ¤íƒ ê³µë°± ì—ëŸ¬\n");
 		exit(1);
 	}
-	else return s->data[(s->top)--];
+	else
+		return s->data[(s->top)--];
 }
 
-element peek(StackType* s) {
-	if (is_empty(s)) {
-		fprintf(stderr, "½ºÅÃ °ø¹é ¿¡·¯\n");
+element peek(StackType *s)
+{
+	if (is_empty(s))
+	{
+		fprintf(stderr, "ìŠ¤íƒ ê³µë°± ì—ëŸ¬\n");
 		exit(1);
 	}
-	else return s->data[s->top];
+	else
+		return s->data[s->top];
 }
 
-int palindrome(char str[]) {
+int palindrome(char str[])
+{
 	StackType s;
 
 	int n = strlen(str) - 1;
@@ -57,11 +72,13 @@ int palindrome(char str[]) {
 
 	init_stack(&s);
 
-	for (int i = 0; i <= n; i++) {
+	for (int i = 0; i <= n; i++)
+	{
 		push(&s, str[i]);
 	}
 
-	for (int j = 0; j <= n; j++) {
+	for (int j = 0; j <= n; j++)
+	{
 		if (str[j] != pop(&s))
 			return 0;
 		else
@@ -69,14 +86,15 @@ int palindrome(char str[]) {
 	}
 }
 
-int main(void) {
+int main(void)
+{
 	char word[MAX_STRING];
 
 	printf("Enter a word to check palindrome: ");
 	scanf("%s", word);
 
 	if (palindrome(word))
-		printf("palindromeÀÔ´Ï´Ù.\n");
+		printf("palindromeìž…ë‹ˆë‹¤.\n");
 	else
-		printf("palindromeÀÌ ¾Æ´Õ´Ï´Ù.\n");
+		printf("palindromeì´ ì•„ë‹™ë‹ˆë‹¤.\n");
 }

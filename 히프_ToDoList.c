@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #define MAX_ELEMENT 100
 #define MAX_STRING 50
@@ -6,36 +7,43 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
+typedef struct
+{
 	char plan[MAX_STRING];
 	int minute;
 } element;
 
-typedef struct {
+typedef struct
+{
 	element heap[MAX_ELEMENT];
 	int heap_size;
 } HeapType;
 
-HeapType* create() {
-	return (HeapType*)malloc(sizeof(HeapType));
+HeapType *create()
+{
+	return (HeapType *)malloc(sizeof(HeapType));
 }
 
-void init(HeapType* h) {
+void init(HeapType *h)
+{
 	h->heap_size = 0;
 }
 
-void insert_max_heap(HeapType* h, element item) {
+void insert_max_heap(HeapType *h, element item)
+{
 	int i;
 	i = ++(h->heap_size);
 
-	while ((i != 1) && (item.minute < h->heap[i / 2].minute)) {
+	while ((i != 1) && (item.minute < h->heap[i / 2].minute))
+	{
 		h->heap[i] = h->heap[i / 2];
 		i /= 2;
 	}
 	h->heap[i] = item;
 }
 
-element delete_max_heap(HeapType* h) {
+element delete_max_heap(HeapType *h)
+{
 	int parent, child;
 	element item, temp;
 
@@ -44,10 +52,12 @@ element delete_max_heap(HeapType* h) {
 	parent = 1;
 	child = 2;
 
-	while (child <= h->heap_size) {
+	while (child <= h->heap_size)
+	{
 		if ((child < h->heap_size) && (h->heap[child].minute) > h->heap[child + 1].minute)
 			child++;
-		if (temp.minute <= h->heap[child].minute) break;
+		if (temp.minute <= h->heap[child].minute)
+			break;
 
 		h->heap[parent] = h->heap[child];
 		parent = child;
@@ -57,21 +67,24 @@ element delete_max_heap(HeapType* h) {
 	return item;
 }
 
-int main() {
-	HeapType* heap;
+int main()
+{
+	HeapType *heap;
 	heap = create();
 	init(heap);
 	char selection;
-	printf("»ğÀÔ(i), »èÁ¦(d), Á¾·á(q) : ");
+	printf("ì‚½ì…(i), ì‚­ì œ(d), ì¢…ë£Œ(q) : ");
 	scanf(" %c", &selection);
 	printf("---------------------------------\n");
-	while (selection != 'q') {
-		if (selection == 'i') {
+	while (selection != 'q')
+	{
+		if (selection == 'i')
+		{
 			char plan[MAX_STRING];
 			int minute;
-			printf("ÇÒ ÀÏ : ");
+			printf("í•  ì¼ : ");
 			scanf("%s", &plan);
-			printf("½Ã°£(ºĞ) : ");
+			printf("ì‹œê°„(ë¶„) : ");
 			scanf("%d", &minute);
 			element e1;
 			strcpy(e1.plan, plan);
@@ -79,9 +92,11 @@ int main() {
 			insert_max_heap(heap, e1);
 			printf("---------------------------------\n");
 		}
-		else if (selection == 'd') {
-			if (heap->heap_size == 0) {
-				printf("´õ ÀÌ»ó ÇÒ ÀÏÀÌ ¾ø½À´Ï´Ù.\n");
+		else if (selection == 'd')
+		{
+			if (heap->heap_size == 0)
+			{
+				printf("ë” ì´ìƒ í•  ì¼ì´ ì—†ìŠµë‹ˆë‹¤.\n");
 				printf("---------------------------------\n");
 				break;
 			}
@@ -89,11 +104,12 @@ int main() {
 			printf("< %d, %s >\n", e2.minute, e2.plan);
 			printf("---------------------------------\n");
 		}
-		else {
-			printf("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+		else
+		{
+			printf("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 			printf("---------------------------------\n");
 		}
-		printf("»ğÀÔ(i), »èÁ¦(d), Á¾·á(q) : ");
+		printf("ì‚½ì…(i), ì‚­ì œ(d), ì¢…ë£Œ(q) : ");
 		scanf(" %c", &selection);
 		fflush(stdin);
 		printf("---------------------------------\n");

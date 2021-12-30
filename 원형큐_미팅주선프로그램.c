@@ -1,54 +1,59 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// ===== ¿øÇüÅ¥ ÄÚµå ½ÃÀÛ ======
+// ===== ì›í˜•í ì½”ë“œ ì‹œì‘ ======
 #define MAX_QUEUE_SIZE 3
 #define MAX_STRING_SIZE 10
 
-typedef struct {
+typedef struct
+{
 	char name[MAX_STRING_SIZE];
 } element;
 
-typedef struct { // Å¥ Å¸ÀÔ
-	element  data[MAX_QUEUE_SIZE];
-	int  front, rear;
+typedef struct
+{ // í íƒ€ì…
+	element data[MAX_QUEUE_SIZE];
+	int front, rear;
 } QueueType;
 
-// ¿À·ù ÇÔ¼ö
-void error(char* message)
+// ì˜¤ë¥˜ í•¨ìˆ˜
+void error(char *message)
 {
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
 
-// °ø¹é »óÅÂ °ËÃâ ÇÔ¼ö
-void init_queue(QueueType* q)
+// ê³µë°± ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
+void init_queue(QueueType *q)
 {
 	q->front = q->rear = 0;
 }
 
-// °ø¹é »óÅÂ °ËÃâ ÇÔ¼ö
-int is_empty(QueueType* q)
+// ê³µë°± ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
+int is_empty(QueueType *q)
 {
 	return (q->front == q->rear);
 }
 
-// Æ÷È­ »óÅÂ °ËÃâ ÇÔ¼ö
-int is_full(QueueType* q)
+// í¬í™” ìƒíƒœ ê²€ì¶œ í•¨ìˆ˜
+int is_full(QueueType *q)
 {
 	return ((q->rear + 1) % MAX_QUEUE_SIZE == q->front);
 }
 
-// ¿øÇüÅ¥ Ãâ·Â ÇÔ¼ö
-void queue_print(QueueType* q)
+// ì›í˜•í ì¶œë ¥ í•¨ìˆ˜
+void queue_print(QueueType *q)
 {
 	printf("QUEUE(front=%d rear=%d) = ", q->front, q->rear);
-	if (!is_empty(q)) {
+	if (!is_empty(q))
+	{
 		int i = q->front;
-		do {
+		do
+		{
 			i = (i + 1) % (MAX_QUEUE_SIZE);
 			printf("%d | ", q->data[i]);
 			if (i == q->rear)
@@ -58,68 +63,77 @@ void queue_print(QueueType* q)
 	printf("\n");
 }
 
-// »ğÀÔ ÇÔ¼ö
-void enqueue(QueueType* q, element item)
+// ì‚½ì… í•¨ìˆ˜
+void enqueue(QueueType *q, element item)
 {
 	if (is_full(q))
-		error("Å¥°¡ Æ÷È­»óÅÂÀÔ´Ï´Ù");
+		error("Å¥ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
 	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
 	q->data[q->rear] = item;
 }
 
-// »èÁ¦ ÇÔ¼ö
-element dequeue(QueueType* q)
+// ì‚­ì œ í•¨ìˆ˜
+element dequeue(QueueType *q)
 {
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù");
+		error("Å¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
 	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
 	return q->data[q->front];
 }
 
-// »èÁ¦ ÇÔ¼ö
-element peek(QueueType* q)
+// êº¼ë‚´ë³´ëŠ” í•¨ìˆ˜
+element peek(QueueType *q)
 {
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù");
+		error("Å¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
 	return q->data[(q->front + 1) % MAX_QUEUE_SIZE];
 }
-// ===== ¿øÇüÅ¥ ÄÚµå ³¡ ======
+// ===== ì›í˜•í ì½”ë“œ ë ======
 
-int get_count(QueueType* q) {
+int get_count(QueueType *q)
+{
 	if (q->rear < q->front)
 		return (q->rear + MAX_QUEUE_SIZE - q->front);
 	else
 		return (q->rear - q->front);
 }
 
-void print_queue(QueueType* q) {
+void print_queue(QueueType *q)
+{
 	int temp = (q->front + 1) % MAX_QUEUE_SIZE;
-	while (temp != (q->rear + 1) % MAX_QUEUE_SIZE) {
+	while (temp != (q->rear + 1) % MAX_QUEUE_SIZE)
+	{
 		printf("%s ", q->data[temp].name);
 		temp = (temp + 1) % MAX_QUEUE_SIZE;
 	}
 	printf("\n");
 }
 
-void match(char* name, QueueType* myQ, QueueType* partnerQ) {
+void match(char *name, QueueType *myQ, QueueType *partnerQ)
+{
 	element newPerson, partner;
-	if (is_empty(partnerQ)) {
-		if (is_full(myQ)) {
-			printf("¾ÆÁ÷ ´ë»óÀÚ°¡ ¾ø½À´Ï´Ù. ´ë±âÀÚ°¡ ²ËÃ¡À¸´Ï ´ã±âÈ¸¸¦ ÀÌ¿ë...\n");
+	if (is_empty(partnerQ))
+	{
+		if (is_full(myQ))
+		{
+			printf("ì•„ì§ ëŒ€ìƒìê°€ ì—†ìŠµë‹ˆë‹¤. ëŒ€ê¸°ìê°€ ê½‰ì°¼ìœ¼ë‹ˆ ë‹´ê¸°íšŒë¥¼ ì´ìš©...\n");
 		}
-		else {
+		else
+		{
 			strcpy(newPerson.name, name);
 			enqueue(myQ, newPerson);
-			printf("¾ÆÁ÷ ´ë»óÀÚ°¡ ¾ø½À´Ï´Ù. ±â´Ù·Á ÁÖ½Ê½Ã¿À.\n");
+			printf("ì•„ì§ ëŒ€ìƒìê°€ ì—†ìŠµë‹ˆë‹¤. ê¸°ë‹¤ë ¤ ì£¼ì‹­ì‹œì˜¤.\n");
 		}
 	}
-	else {
+	else
+	{
 		partner = dequeue(partnerQ);
-		printf("Ä¿ÇÃÀÌ Åº»ıÇß½À´Ï´Ù! %s°ú %s\n", name, partner.name);
+		printf("ì»¤í”Œì´ íƒ„ìƒí–ˆìŠµë‹ˆë‹¤! %sê³¼ %s\n", name, partner.name);
 	}
 }
 
-int main(void) {
+int main(void)
+{
 	QueueType male;
 	init_queue(&male);
 	QueueType female;
@@ -129,36 +143,38 @@ int main(void) {
 	char gender;
 	char input;
 
-	printf("¹ÌÆÃ ÁÖ¼± ÇÁ·Î±×·¥ÀÔ´Ï´Ù.\n");
+	printf("ë¯¸íŒ… ì£¼ì„  í”„ë¡œê·¸ë¨ì…ë‹ˆë‹¤.\n");
 
-	do {
-		printf("i<nsert, °í°´ÀÔ·Â>, c<heck, ´ë±âÀÚ Ã¼Å©>, q<uit>: ");
+	do
+	{
+		printf("i<nsert, ê³ ê°ì…ë ¥>, c<heck, ëŒ€ê¸°ì ì²´í¬>, q<uit>: ");
 		scanf(" %c", &input);
-		switch (input) {
+		switch (input)
+		{
 		case 'i':
-			printf("ÀÌ¸§À» ÀÔ·Â: ");
+			printf("ì´ë¦„ì„ ì…ë ¥: ");
 			scanf("%s", name);
-			printf("¼ºº°À» ÀÔ·Â(m or f): ");
+			printf("ì„±ë³„ì„ ì…ë ¥(m or f): ");
 			scanf(" %c", &gender);
 			if (gender == 'm')
 				match(name, &male, &female);
 			else if (gender == 'f')
 				match(name, &female, &male);
-			else {
-				printf("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+			else
+			{
+				printf("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 			}
 			break;
 		case 'c':
-			printf("³²¼º ´ë±âÀÚ %d¸í: ", get_count(&male));
+			printf("ë‚¨ì„± ëŒ€ê¸°ì %dëª…: ", get_count(&male));
 			print_queue(&male);
-			printf("¿©¼º ´ë±âÀÚ %d¸í: ", get_count(&female));
+			printf("ì—¬ì„± ëŒ€ê¸°ì %dëª…: ", get_count(&female));
 			print_queue(&female);
 			break;
 		case 'q':
 			break;
 		default:
-			printf("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+			printf("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 		}
 	} while (input != 'q');
 }
-

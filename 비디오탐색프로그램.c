@@ -1,39 +1,47 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #define MAX_VIDEO 100
 #define MAX_CUST 20 // max customer
-#define MAX_CHAR 50 // ¹®ÀÚ¿­ÀÇ max ¹®ÀÚ
+#define MAX_CHAR 50 // ë¬¸ìì—´ì˜ max ë¬¸ì
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
+typedef struct
+{
 	char title[MAX_CHAR];
 	int qty;
 } VideoInfo;
 
-typedef struct {
+typedef struct
+{
 	int custId;
 	char title[MAX_CHAR];
 } RentInfo;
 
-void printAllVideo(VideoInfo videoList[], int videoCount) {
-	printf("VideoÁ¦¸ñ \t¼ö·®\n");
+void printAllVideo(VideoInfo videoList[], int videoCount)
+{
+	printf("ë¬¸ìì—´ì˜ max ë¬¸ì");
 	printf("-----------------------\n");
-	for (int i = 0; i < videoCount; i++) {
+	for (int i = 0; i < videoCount; i++)
+	{
 		printf("%-8s\t%d\n", videoList[i].title, videoList[i].qty);
 	}
 }
 
-void purchaseVideo(VideoInfo videoList[], int* videoCountPtr) {
+void purchaseVideo(VideoInfo videoList[], int *videoCountPtr)
+{
 	char videoTitle[MAX_CHAR];
 	int videoQty;
-	printf("Enter Video Á¦¸ñ: ");
+	printf("Enter Video ì œëª©: ");
 	scanf("%s", &videoTitle);
-	printf("Enter Video ¼ö·®: ");
+	printf("Enter Video ìˆ˜ëŸ‰: ");
 	scanf("%d", &videoQty);
-	for (int i = 0; i < *videoCountPtr; i++) {
-		if (strcmp(videoList[i].title, videoTitle) == 0) {
+	for (int i = 0; i < *videoCountPtr; i++)
+	{
+		if (strcmp(videoList[i].title, videoTitle) == 0)
+		{
 			(videoList[i].qty) += videoQty;
 			return;
 		}
@@ -43,13 +51,16 @@ void purchaseVideo(VideoInfo videoList[], int* videoCountPtr) {
 	(*videoCountPtr)++;
 }
 
-VideoInfo* searchVideoByTitle(VideoInfo videoList[], int videoCount) {
-	VideoInfo* video;
+VideoInfo *searchVideoByTitle(VideoInfo videoList[], int videoCount)
+{
+	VideoInfo *video;
 	char videoTitle[MAX_CHAR];
-	printf("Enter Video Á¦¸ñ: ");
+	printf("Enter Video ì œëª©: ");
 	scanf("%s", &videoTitle);
-	for (int i = 0; i < videoCount; i++) {
-		if (strcmp(videoList[i].title, videoTitle) == 0) {
+	for (int i = 0; i < videoCount; i++)
+	{
+		if (strcmp(videoList[i].title, videoTitle) == 0)
+		{
 			video = &videoList[i];
 			return video;
 		}
@@ -57,89 +68,108 @@ VideoInfo* searchVideoByTitle(VideoInfo videoList[], int videoCount) {
 	return NULL;
 }
 
-void rentVideo(RentInfo rentList[], int* rentCount, VideoInfo videoList[], int videoCount) {
+void rentVideo(RentInfo rentList[], int *rentCount, VideoInfo videoList[], int videoCount)
+{
 	int customerID;
-	VideoInfo* video;
+	VideoInfo *video;
 	video = searchVideoByTitle(videoList, videoCount);
-	if (video == NULL) {
-		printf("±×·± ºñµğ¿À´Â ¾ø½À´Ï´Ù.\n");
+	if (video == NULL)
+	{
+		printf("ê·¸ëŸ° ë¹„ë””ì˜¤ëŠ” ì—†ìŠµë‹ˆë‹¤.\n");
 		return;
 	}
-	else {
-		if (video->qty == 0) {
-			printf("¸ğµÎ ´ë¿©ÁßÀÔ´Ï´Ù.\n");
+	else
+	{
+		if (video->qty == 0)
+		{
+			printf("ëª¨ë‘ ëŒ€ì—¬ì¤‘ì…ë‹ˆë‹¤.\n");
 			return;
 		}
-		else {
+		else
+		{
 			(video->qty)--;
 		}
 	}
-	printf("Enter °í°´ id:(¼ıÀÚ3ÀÚ¸®) ");
+	printf("Enter ê³ ê° id:(ìˆ«ì3ìë¦¬) ");
 	scanf("%d", &customerID);
 	strcpy(rentList[*rentCount].title, video->title);
 	rentList[*rentCount].custId = customerID;
 	(*rentCount)++;
 }
 
-void printAllRent(RentInfo rentList[], int rentCount) {
-	printf("°í°´id \t VideoÁ¦¸ñ\n");
+void printAllRent(RentInfo rentList[], int rentCount)
+{
+	printf("ê³ ê°id \t Videoì œëª©\n");
 	printf("-----------------------\n");
-	for (int i = 0; i < rentCount; i++) {
+	for (int i = 0; i < rentCount; i++)
+	{
 		printf("%d \t %s\n", rentList[i].custId, rentList[i].title);
 	}
 }
 
-void returnVideo(RentInfo rentList[], int* rentCount, VideoInfo videoList[], int videoCount) {
+void returnVideo(RentInfo rentList[], int *rentCount, VideoInfo videoList[], int videoCount)
+{
 	char videoTitle[MAX_CHAR];
 	int customerID;
-	printf("Enter °í°´id:(¼ıÀÚ3ÀÚ¸®) ");
+	printf("Enter ê³ ê°id:(ìˆ«ì3ìë¦¬) ");
 	scanf("%d", &customerID);
 	int n = 0;
-	while (customerID != rentList[n].custId) {
-		if (n == *rentCount & customerID != rentList[n].custId) {
-			printf("°í°´id¸¦ Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+	while (customerID != rentList[n].custId)
+	{
+		if (n == *rentCount & customerID != rentList[n].custId)
+		{
+			printf("ê³ ê°idë¥¼ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 			return;
 		}
 		n++;
 	}
-	printf("Enter video Á¦¸ñ: ");
+	printf("Enter video ì œëª©: ");
 	scanf("%s", &videoTitle);
 	int m = 0;
-	while (strcmp(videoTitle, rentList[m].title) != 0) {
-		if (m == *rentCount & (strcmp(videoTitle, rentList[m].title) != 0)) {
-			printf("VideoÁ¦¸ñÀ» Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+	while (strcmp(videoTitle, rentList[m].title) != 0)
+	{
+		if (m == *rentCount & (strcmp(videoTitle, rentList[m].title) != 0))
+		{
+			printf("Videoì œëª©ì„ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 			return;
 		}
 		m++;
 	}
-	for (int i = 0; i < *rentCount; i++) {
-		if (strcmp(rentList[i].title, videoTitle) == 0) {
+	for (int i = 0; i < *rentCount; i++)
+	{
+		if (strcmp(rentList[i].title, videoTitle) == 0)
+		{
 			strcpy(rentList[i].title, rentList[i + 1].title);
 			rentList[i].custId = rentList[i + 1].custId;
 			(*rentCount)--;
 		}
 	}
-	for (int j = 0; j < videoCount; j++) {
-		if (strcmp(videoList[j].title, videoTitle) == 0) {
+	for (int j = 0; j < videoCount; j++)
+	{
+		if (strcmp(videoList[j].title, videoTitle) == 0)
+		{
 			videoList[j].qty++;
 		}
 	}
 }
 
-int main(void) {
+int main(void)
+{
 	int videoCount = 5;
-	VideoInfo videoList[MAX_VIDEO] = { {"Minari", 5}, {"Parasite", 3}, {"Avatar", 2}, {"Soul", 7}, {"HomeAlone", 3} };
-	int rentCount = 0; // ÇöÀç ´ëÃâ °Ç¼ö´Â 0ÀÓ
+	VideoInfo videoList[MAX_VIDEO] = {{"Minari", 5}, {"Parasite", 3}, {"Avatar", 2}, {"Soul", 7}, {"HomeAlone", 3}};
+	int rentCount = 0; // í˜„ì¬ ëŒ€ì¶œ ê±´ìˆ˜ëŠ” 0ì„
 	RentInfo rentList[MAX_CUST];
 	int choice;
-	VideoInfo* videoPtr;
+	VideoInfo *videoPtr;
 
-	printf("1(All Video Ãâ·Â), 2(±¸ÀÔ), 3(°Ë»ö), 4(´ë¿©), 5(All ´ë¿©Á¤º¸ Ãâ·Â), 6(¹İ³³), 7(Á¾·á): ");
+	printf("1(All Video ì¶œë ¥), 2(êµ¬ì…), 3(ê²€ìƒ‰), 4(ëŒ€ì—¬), 5(All ëŒ€ì—¬ì •ë³´ ì¶œë ¥), 6(ë°˜ë‚©), 7(ì¢…ë£Œ): ");
 	scanf("%d", &choice);
 	printf("\n");
 
-	while (choice != 7) {
-		switch (choice) {
+	while (choice != 7)
+	{
+		switch (choice)
+		{
 		case 1:
 			printAllVideo(videoList, videoCount);
 			break;
@@ -148,11 +178,11 @@ int main(void) {
 			break;
 		case 3:
 			if ((videoPtr = searchVideoByTitle(videoList, videoCount)) == NULL)
-				printf("±×·± ºñµğ¿À´Â ¾ø½À´Ï´Ù.\n");
+				printf("ê·¸ëŸ° ë¹„ë””ì˜¤ëŠ” ì—†ìŠµë‹ˆë‹¤.\n");
 			else if (videoPtr->qty == 0)
-				printf("¸ğµÎ ´ë¿©ÁßÀÔ´Ï´Ù.\n");
+				printf("ëª¨ë‘ ëŒ€ì—¬ì¤‘ì…ë‹ˆë‹¤.\n");
 			else
-				printf("´ë¿© °¡´ÉÇÕ´Ï´Ù.\n");
+				printf("ëŒ€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤.\n");
 			break;
 		case 4:
 			rentVideo(rentList, &rentCount, videoList, videoCount);
@@ -165,7 +195,7 @@ int main(void) {
 			break;
 		}
 		printf("-----------------------\n\n");
-		printf("1(All Video Ãâ·Â), 2(±¸ÀÔ), 3(°Ë»ö), 4(´ë¿©), 5(All ´ë¿©Á¤º¸ Ãâ·Â), 6(¹İ³³), 7(Á¾·á): ");
+		printf("1(All Video ì¶œë ¥), 2(êµ¬ì…), 3(ê²€ìƒ‰), 4(ëŒ€ì—¬), 5(All ëŒ€ì—¬ì •ë³´ ì¶œë ¥), 6(ë°˜ë‚©), 7(ì¢…ë£Œ): ");
 		scanf("%d", &choice);
 		printf("\n");
 	}

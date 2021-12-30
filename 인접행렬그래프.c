@@ -1,15 +1,17 @@
-/*
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define MAX_VERTICES 50
 
-typedef struct GraphType {
+typedef struct GraphType
+{
 	int n;
 	int adj_mat[MAX_VERTICES][MAX_VERTICES];
-}GraphType;
+} GraphType;
 
-void init(GraphType* g) {
+void init(GraphType *g)
+{
 	int r, c;
 	g->n = 0;
 	for (r = 0; r < MAX_VERTICES; r++)
@@ -17,35 +19,43 @@ void init(GraphType* g) {
 			g->adj_mat[r][c] = 0;
 }
 
-void insert_vertex(GraphType* g, int v) {
-	if (((g->n) + 1) > MAX_VERTICES) {
-		fprintf(stderr, "±×·¡ÇÁ: Á¤Á¡ °³¼ö ÃÊ°ú");
+void insert_vertex(GraphType *g, int v)
+{
+	if (((g->n) + 1) > MAX_VERTICES)
+	{
+		fprintf(stderr, "ê·¸ëž˜í”„: ì •ì  ê°œìˆ˜ ì´ˆê³¼");
 		return;
 	}
 	g->n++;
 }
 
-void insert_edge(GraphType* g, int start, int end) {
-	if (start >= g->n || end >= g->n) {
-		fprintf(stderr, "±×·¡ÇÁ: Á¤Á¡ ¹øÈ£ ¿À·ù");
+void insert_edge(GraphType *g, int start, int end)
+{
+	if (start >= g->n || end >= g->n)
+	{
+		fprintf(stderr, "ê·¸ëž˜í”„: ì •ì  ë²ˆí˜¸ ì˜¤ë¥˜");
 		return;
 	}
 	g->adj_mat[start][end] = 1;
 	g->adj_mat[end][start] = 1;
 }
 
-void print_adj_mat(GraphType* g) {
-	for (int i = 0; i < g->n; i++) {
-		for (int j = 0; j < g->n; j++) {
+void print_adj_mat(GraphType *g)
+{
+	for (int i = 0; i < g->n; i++)
+	{
+		for (int j = 0; j < g->n; j++)
+		{
 			printf("%2d ", g->adj_mat[i][j]);
 		}
 		printf("\n");
 	}
 }
 
-void main() {
-	GraphType* g;
-	g = (GraphType*)malloc(sizeof(GraphType));
+void main()
+{
+	GraphType *g;
+	g = (GraphType *)malloc(sizeof(GraphType));
 	init(g);
 	for (int i = 0; i < 4; i++)
 		insert_vertex(g, i);
@@ -58,4 +68,3 @@ void main() {
 
 	free(g);
 }
-*/

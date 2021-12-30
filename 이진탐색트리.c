@@ -1,32 +1,40 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef int element;
-typedef struct TreeNode {
+typedef struct TreeNode
+{
 	element key;
-	struct TreeNode* left, * right;
-}TreeNode;
+	struct TreeNode *left, *right;
+} TreeNode;
 
-TreeNode* search(TreeNode* node, int key) {
-	if (node == NULL) return NULL;
-	if (key == node->key) return node;
+TreeNode *search(TreeNode *node, int key)
+{
+	if (node == NULL)
+		return NULL;
+	if (key == node->key)
+		return node;
 	else if (key < node->key)
 		return search(node->left, key);
 	else
 		return search(node->right, key);
 }
 
-TreeNode* new_node(int item) {
-	TreeNode* temp = (TreeNode*)malloc(sizeof(TreeNode));
+TreeNode *new_node(int item)
+{
+	TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
 	temp->key = item;
 	temp->left = temp->right = NULL;
 	return temp;
 }
 
-TreeNode* insert_node(TreeNode* node, int key) {
-	if (node == NULL) return new_node(key);
+TreeNode *insert_node(TreeNode *node, int key)
+{
+	if (node == NULL)
+		return new_node(key);
 
 	if (key < node->key)
 		node->left = insert_node(node->left, key);
@@ -36,8 +44,9 @@ TreeNode* insert_node(TreeNode* node, int key) {
 	return node;
 }
 
-int get_minimum(TreeNode* node) {
-	TreeNode* current = node;
+int get_minimum(TreeNode *node)
+{
+	TreeNode *current = node;
 
 	while (current->left != NULL)
 		current = current->left;
@@ -45,8 +54,9 @@ int get_minimum(TreeNode* node) {
 	return current->key;
 }
 
-int get_maximum(TreeNode* node) {
-	TreeNode* current = node;
+int get_maximum(TreeNode *node)
+{
+	TreeNode *current = node;
 
 	while (current->right != NULL)
 		current = current->right;
@@ -54,21 +64,26 @@ int get_maximum(TreeNode* node) {
 	return current->key;
 }
 
-TreeNode* delete_node(TreeNode* root, int key) {
-	if (root == NULL) return root;
+TreeNode *delete_node(TreeNode *root, int key)
+{
+	if (root == NULL)
+		return root;
 
 	if (key < root->key)
 		root->left = delete_node(root->left, key);
 	else if (key > root->key)
 		root->right = delete_node(root->right, key);
-	else {
-		if (root->left == NULL) {
-			TreeNode* temp = root->right;
+	else
+	{
+		if (root->left == NULL)
+		{
+			TreeNode *temp = root->right;
 			free(root);
 			return temp;
 		}
-		else if (root->right == NULL) {
-			TreeNode* temp = root->left;
+		else if (root->right == NULL)
+		{
+			TreeNode *temp = root->left;
 			free(root);
 			return temp;
 		}
@@ -78,75 +93,82 @@ TreeNode* delete_node(TreeNode* root, int key) {
 	return root;
 }
 
-void preorder(TreeNode* root) {
-	if (root) {
+void preorder(TreeNode *root)
+{
+	if (root)
+	{
 		printf("%d ", root->key);
 		preorder(root->left);
 		preorder(root->right);
 	}
 }
 
-int get_height(TreeNode* node) {
+int get_height(TreeNode *node)
+{
 	int height = 0;
 
-	if (node != NULL) 
+	if (node != NULL)
 		height = 1 + max(get_height(node->left), get_height(node->right));
-	
+
 	return height;
 }
 
-int get_count(TreeNode* root) {
+int get_count(TreeNode *root)
+{
 	int count = 0;
-	if (root) 
+	if (root)
 		count = 1 + get_count(root->left) + get_count(root->right);
-	
+
 	return count;
 }
 
-int main() {
-	TreeNode* root = NULL;
+int main()
+{
+	TreeNode *root = NULL;
 	char selection;
 	int key;
 	printf("Enter i<nsert>, d<elete>, s<earch>, p<rint>, h<eight>, c<ount>, m<ax>, n<min>, q<uit>: ");
 	scanf(" %c", &selection);
-	while (selection != 'q') {
-		switch (selection) {
+	while (selection != 'q')
+	{
+		switch (selection)
+		{
 		case 'i':
-			printf("»ğÀÔÇÒ key°ª ÀÔ·Â:");
+			printf("ì‚½ì…í•  keyê°’ ì…ë ¥:");
 			scanf("%d", &key);
 			root = insert_node(root, key);
 			break;
 		case 'd':
-			printf("»èÁ¦ÇÒ key°ª ÀÔ·Â:");
+			printf("ì‚­ì œí•  keyê°’ ì…ë ¥:");
 			scanf("%d", &key);
 			delete_node(root, key);
 			break;
 		case 's':
-			printf("Å½»öÇÒ key°ª ÀÔ·Â:");
+			printf("íƒìƒ‰í•  keyê°’ ì…ë ¥:");
 			scanf("%d", &key);
 			if (search(root, key))
-				printf("ÀÖÀ½\n");
+				printf("ìˆìŒ\n");
 			else
-				printf("¾øÀ½\n");
+				printf("ì—†ìŒ\n");
 			break;
 		case 'p':
 			preorder(root);
 			printf("\n");
 			break;
 		case 'h':
-			printf("Æ®¸®ÀÇ ³ôÀÌ´Â %d\n", get_height(root));
+			printf("íŠ¸ë¦¬ì˜ ë†’ì´ëŠ” %d\n", get_height(root));
 			break;
 		case 'c':
-			printf("³ëµåÀÇ °³¼ö´Â %d\n", get_count(root));
+			printf("ë…¸ë“œì˜ ê°œìˆ˜ëŠ” %d\n", get_count(root));
 			break;
 		case 'm':
-			printf("°¡Àå Å« °ªÀº %d\n", get_maximum(root));
+			printf("ê°€ì¥ í° ê°’ì€ %d\n", get_maximum(root));
 			break;
 		case 'n':
-			printf("°¡Àå ÀÛÀº °ªÀº %d\n", get_minimum(root));
+			printf("ê°€ì¥ ì‘ì€ ê°’ì€ %d\n", get_minimum(root));
 			break;
 		default:
-			printf("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+			printf("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 		}
 		printf("Enter i<nsert>, d<elete>, s<earch>, p<rint>, h<eight>, c<ount>, m<ax>, n<min>, q<uit>: ");
 		scanf(" %c", &selection);

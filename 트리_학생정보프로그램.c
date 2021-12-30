@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 #define MAX_STRING 100
 
@@ -5,41 +6,44 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
+typedef struct
+{
 	int id;
 	char name[MAX_STRING];
 	char tel[MAX_STRING];
 	char dept[MAX_STRING];
 } element;
 
-typedef struct TreeNode {
+typedef struct TreeNode
+{
 	element data;
-	struct TreeNode* left, * right;
+	struct TreeNode *left, *right;
 } TreeNode;
 
-element get_data() {
+element get_data()
+{
 	element data;
 	int id;
 	char name[MAX_STRING];
 	char tel[MAX_STRING];
 	char dept[MAX_STRING];
 
-	printf("ÇĞ¹ø ÀÔ·Â:");
+	printf("í•™ë²ˆ ì…ë ¥:");
 	scanf("%d", &id);
 	fflush(stdin);
 	data.id = id;
 
-	printf("ÀÌ¸§ ÀÔ·Â:");
+	printf("ì´ë¦„ ì…ë ¥:");
 	scanf("%s", &name);
 	fflush(stdin);
 	strcpy(data.name, name);
 
-	printf("ÀüÈ­¹øÈ£ ÀÔ·Â:");
+	printf("ì „í™”ë²ˆí˜¸ ì…ë ¥:");
 	scanf("%s", &tel);
 	fflush(stdin);
 	strcpy(data.tel, tel);
 
-	printf("ÇĞ°ú ÀÔ·Â:");
+	printf("í•™ê³¼ ì…ë ¥:");
 	scanf("%s", &dept);
 	fflush(stdin);
 	strcpy(data.dept, dept);
@@ -47,15 +51,18 @@ element get_data() {
 	return data;
 }
 
-TreeNode* new_node(element data) {
-	TreeNode* temp = (TreeNode*)malloc(sizeof(TreeNode));
+TreeNode *new_node(element data)
+{
+	TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
 	temp->data = data;
 	temp->left = temp->right = NULL;
 	return temp;
 }
 
-TreeNode* insert_node(TreeNode* node, element data) {
-	if (node == NULL) return new_node(data);
+TreeNode *insert_node(TreeNode *node, element data)
+{
+	if (node == NULL)
+		return new_node(data);
 
 	if (data.id < node->data.id)
 		node->left = insert_node(node->left, data);
@@ -65,18 +72,22 @@ TreeNode* insert_node(TreeNode* node, element data) {
 	return node;
 }
 
-TreeNode* search(TreeNode* node, int id) {
-	if (node == NULL) return NULL;
+TreeNode *search(TreeNode *node, int id)
+{
+	if (node == NULL)
+		return NULL;
 
-	if (id == node->data.id) return node;
+	if (id == node->data.id)
+		return node;
 	else if (id < node->data.id)
 		return search(node->left, id);
 	else
 		return search(node->right, id);
 }
 
-TreeNode* min_value_node(TreeNode* node) {
-	TreeNode* current = node;
+TreeNode *min_value_node(TreeNode *node)
+{
+	TreeNode *current = node;
 
 	while (current->left != NULL)
 		current = current->left;
@@ -84,52 +95,61 @@ TreeNode* min_value_node(TreeNode* node) {
 	return current;
 }
 
-TreeNode* delete_node(TreeNode* root, int id) {
-	if (root == NULL) return root;
+TreeNode *delete_node(TreeNode *root, int id)
+{
+	if (root == NULL)
+		return root;
 
 	if (id < root->data.id)
 		root->left = delete_node(root->left, id);
-	else if(id > root->data.id)
+	else if (id > root->data.id)
 		root->right = delete_node(root->right, id);
-	else {
-		if (root->left == NULL) {
-			TreeNode* temp = root->right;
+	else
+	{
+		if (root->left == NULL)
+		{
+			TreeNode *temp = root->right;
 			free(root);
 			return temp;
 		}
-		else if (root->right == NULL) {
-			TreeNode* temp = root->left;
+		else if (root->right == NULL)
+		{
+			TreeNode *temp = root->left;
 			free(root);
 			return temp;
 		}
-		TreeNode* temp = min_value_node(root->right);
+		TreeNode *temp = min_value_node(root->right);
 		root->data = temp->data;
 		root->right = delete_node(root->right, id);
 	}
 	return root;
 }
 
-void print_inorder(TreeNode* root) {
-	if (root) {
+void print_inorder(TreeNode *root)
+{
+	if (root)
+	{
 		print_inorder(root->left);
 		printf("-----------------------------------\n");
-		printf("ÇĞ¹ø: %d\n", root->data.id);
-		printf("ÀÌ¸§: %s\n", root->data.name);
-		printf("ÀüÈ­¹øÈ£: %s\n", root->data.tel);
-		printf("ÇĞ°ú: %s\n", root->data.dept);
+		printf("í•™ë²ˆ: %d\n", root->data.id);
+		printf("ì´ë¦„: %s\n", root->data.name);
+		printf("ì „í™”ë²ˆí˜¸: %s\n", root->data.tel);
+		printf("í•™ê³¼: %s\n", root->data.dept);
 		print_inorder(root->right);
 	}
 }
 
-void print_data(TreeNode* node) {
+void print_data(TreeNode *node)
+{
 	printf("-----------------------------------\n");
-	printf("ÇĞ¹ø: %d\n", node->data.id);
-	printf("ÀÌ¸§: %s\n", node->data.name);
-	printf("ÀüÈ­¹øÈ£: %s\n", node->data.tel);
-	printf("ÇĞ°ú: %s\n", node->data.dept);
+	printf("í•™ë²ˆ: %d\n", node->data.id);
+	printf("ì´ë¦„: %s\n", node->data.name);
+	printf("ì „í™”ë²ˆí˜¸: %s\n", node->data.tel);
+	printf("í•™ê³¼: %s\n", node->data.dept);
 }
 
-int get_count(TreeNode* root) {
+int get_count(TreeNode *root)
+{
 	int count = 0;
 	if (root)
 		count = 1 + get_count(root->left) + get_count(root->right);
@@ -137,41 +157,49 @@ int get_count(TreeNode* root) {
 	return count;
 }
 
-int main() {
-	TreeNode* root = NULL;
+int main()
+{
+	TreeNode *root = NULL;
 	char selection;
 	printf("Enter i(nsert), d(elete), s(earch), p(rint), c(ount), q(uit):");
 	scanf(" %c", &selection);
-	while (selection != 'q') {
-		if (selection == 'i') {
+	while (selection != 'q')
+	{
+		if (selection == 'i')
+		{
 			element data = get_data();
 			root = insert_node(root, data);
 		}
-		else if (selection == 'd') {
+		else if (selection == 'd')
+		{
 			int id;
-			printf("»èÁ¦ÇÒ ÇĞ¹ø ÀÔ·Â:");
+			printf("ì‚­ì œí•  í•™ë²ˆ ì…ë ¥:");
 			scanf("%d", &id);
 			root = delete_node(root, id);
 		}
-		else if (selection == 's') {
+		else if (selection == 's')
+		{
 			int id;
-			printf("Å½»öÇÒ ÇĞ¹ø ÀÔ·Â:");
+			printf("íƒìƒ‰í•  í•™ë²ˆ ì…ë ¥:");
 			scanf("%d", &id);
-			TreeNode* temp = search(root, id);
+			TreeNode *temp = search(root, id);
 			if (temp == NULL)
-				printf("id°¡ %dÀÎ ÇĞ»ıÀº ¾ø½À´Ï´Ù.\n", id);
+				printf("idê°€ %dì¸ í•™ìƒì€ ì—†ìŠµë‹ˆë‹¤.\n", id);
 			else
 				print_data(temp);
 		}
-		else if (selection == 'p') {
-			printf("ÇĞ»ı Á¤º¸ ÇĞ¹ø ¼ø Ãâ·Â\n");
+		else if (selection == 'p')
+		{
+			printf("í•™ìƒ ì •ë³´ í•™ë²ˆ ìˆœ ì¶œë ¥\n");
 			print_inorder(root);
 		}
-		else if (selection == 'c') {
-			printf("ÇöÀç ÀúÀåµÈ ÇĞ»ıÀÇ ÃÑ ¼ö´Â %d\n", get_count(root));
+		else if (selection == 'c')
+		{
+			printf("í˜„ì¬ ì €ì¥ëœ í•™ìƒì˜ ì´ ìˆ˜ëŠ” %d\n", get_count(root));
 		}
-		else {
-			printf("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+		else
+		{
+			printf("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 		}
 		printf("Enter i(nsert), d(elete), s(earch), p(rint), c(ount), q(uit):");
 		scanf(" %c", &selection);

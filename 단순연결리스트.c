@@ -1,70 +1,86 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef int element;
-typedef struct ListNode {
+typedef struct ListNode
+{
 	element data;
-	struct ListNode* link;
-}ListNode;
+	struct ListNode *link;
+} ListNode;
 
-void error(char* message) {
+void error(char *message)
+{
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
 
-ListNode* insert_first(ListNode* head, int value) {
-	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
+ListNode *insert_first(ListNode *head, int value)
+{
+	ListNode *p = (ListNode *)malloc(sizeof(ListNode));
 	p->data = value;
 	p->link = head;
 	head = p;
 	return head;
 }
 
-ListNode* insert(ListNode* head, ListNode* pre, element value) {
-	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
+ListNode *insert(ListNode *head, ListNode *pre, element value)
+{
+	ListNode *p = (ListNode *)malloc(sizeof(ListNode));
 	p->data = value;
 	p->link = pre->link;
 	pre->link = p;
 	return head;
 }
 
-ListNode* delete_first(ListNode* head) {
-	ListNode* removed;
-	if (head == NULL) return NULL;
+ListNode *delete_first(ListNode *head)
+{
+	ListNode *removed;
+	if (head == NULL)
+		return NULL;
 	removed = head;
 	head = removed->link;
 	free(removed);
 	return head;
 }
 
-ListNode* delete(ListNode* head, ListNode* pre) {
-	ListNode* removed;
+ListNode *delete (ListNode *head, ListNode *pre)
+{
+	ListNode *removed;
 	removed = pre->link;
 	pre->link = removed->link;
 	free(removed);
 	return head;
 }
 
-void print_list(ListNode* head) {
-	for (ListNode* p = head; p != NULL; p = p->link) 
+void print_list(ListNode *head)
+{
+	for (ListNode *p = head; p != NULL; p = p->link)
 		printf("%d->", p->data);
 	printf("NULL \n");
 }
 
-ListNode* search_list(ListNode* head, element x) {
-	ListNode* p = head;
-	while (p != NULL) {
-		if (p->data == x) return p;
+ListNode *search_list(ListNode *head, element x)
+{
+	ListNode *p = head;
+	while (p != NULL)
+	{
+		if (p->data == x)
+			return p;
 		p = p->link;
 	}
 	return NULL;
 }
 
-ListNode* concat_list(ListNode* head1, ListNode* head2) {
-	if (head1 == NULL) return head2;
-	else if (head2 == NULL) return head1;
-	else {
-		ListNode* p;
+ListNode *concat_list(ListNode *head1, ListNode *head2)
+{
+	if (head1 == NULL)
+		return head2;
+	else if (head2 == NULL)
+		return head1;
+	else
+	{
+		ListNode *p;
 		p = head1;
 		while (p->link != NULL)
 			p = p->link;
@@ -73,11 +89,13 @@ ListNode* concat_list(ListNode* head1, ListNode* head2) {
 	}
 }
 
-ListNode* reverse(ListNode* head) {
-	ListNode* p, * q, * r;
+ListNode *reverse(ListNode *head)
+{
+	ListNode *p, *q, *r;
 	p = head;
 	q = NULL;
-	while (p != NULL) {
+	while (p != NULL)
+	{
 		r = q;
 		q = p;
 		p = p->link;
@@ -86,22 +104,25 @@ ListNode* reverse(ListNode* head) {
 	return q;
 }
 
-int main(void) {
-	ListNode* head = NULL;
+int main(void)
+{
+	ListNode *head = NULL;
 
-	// ±âº» ¿¬°á¸®½ºÆ® Å×½ºÆ®
+	// ê¸°ë³¸ ì—°ê²°ë¦¬ìŠ¤íŠ¸ í…ŒìŠ¤íŠ¸
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; i++)
+	{
 		head = insert_first(head, i);
 		print_list(head);
 	}
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; i++)
+	{
 		head = delete_first(head);
 		print_list(head);
 	}
 	printf("\n");
 
-	// Æ¯Á¤ÇÑ °ªÀ» Å½»öÇÏ´Â ÇÔ¼ö Å×½ºÆ®
+	// íŠ¹ì •í•œ ê°’ì„ íƒìƒ‰í•˜ëŠ” í•¨ìˆ˜ í…ŒìŠ¤íŠ¸
 
 	head = insert_first(head, 10);
 	print_list(head);
@@ -111,15 +132,15 @@ int main(void) {
 	print_list(head);
 
 	if (search_list(head, 30) != NULL)
-		printf("¸®½ºÆ®¿¡¼­ 30À» Ã£¾Ò½À´Ï´Ù.\n");
+		printf("ë¦¬ìŠ¤íŠ¸ì—ì„œ 30ì„ ì°¾ì•˜ìŠµë‹ˆë‹¤.\n");
 	else
-		printf("¸®½ºÆ®¿¡¼­ 30À» Ã£Áö ¸øÇß½À´Ï´Ù.\n");
+		printf("ë¦¬ìŠ¤íŠ¸ì—ì„œ 30ì„ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.\n");
 	printf("\n");
 
-	// µÎ °³ÀÇ ¸®½ºÆ®¸¦ ÇÕÄ¡´Â ÇÔ¼ö Å×½ºÆ®
+	// ë‘ ê°œì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ í•©ì¹˜ëŠ” í•¨ìˆ˜ í…ŒìŠ¤íŠ¸
 
-	ListNode* head1 = NULL;
-	ListNode* head2 = NULL;
+	ListNode *head1 = NULL;
+	ListNode *head2 = NULL;
 
 	head1 = insert_first(head1, 10);
 	head1 = insert_first(head1, 20);
@@ -130,20 +151,22 @@ int main(void) {
 	head2 = insert_first(head2, 50);
 	print_list(head2);
 
-	ListNode* total = concat_list(head1, head2);
+	ListNode *total = concat_list(head1, head2);
 	print_list(total);
 	printf("\n");
 
-	// ¸®½ºÆ®¸¦ ¿ª¼øÀ¸·Î ¸¸µå´Â ÇÔ¼ö Å×½ºÆ®
+	// ë¦¬ìŠ¤íŠ¸ë¥¼ ì—­ìˆœìœ¼ë¡œ ë§Œë“œëŠ” í•¨ìˆ˜ í…ŒìŠ¤íŠ¸
 
-	for (int i = 0; i < 2; i++) {
-		head1 = delete_first(head1);  // head1 ÃÊ±âÈ­
+	for (int i = 0; i < 2; i++)
+	{
+		head1 = delete_first(head1); // head1 ì´ˆê¸°í™”
 	}
 	head1 = NULL;
 
-	for (int i = 0; i < 2; i++) {
-		head2 = delete_first(head2);  // head2 ÃÊ±âÈ­
-	} 
+	for (int i = 0; i < 2; i++)
+	{
+		head2 = delete_first(head2); // head2 ì´ˆê¸°í™”
+	}
 	head2 = NULL;
 
 	head1 = insert_first(head1, 10);

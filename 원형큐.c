@@ -1,4 +1,4 @@
-/*
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -7,85 +7,99 @@
 #define MAX_QUEUE_SIZE 5
 
 typedef int element;
-typedef struct {
+typedef struct
+{
 	element data[MAX_QUEUE_SIZE];
 	int front, rear;
-}QueueType;
+} QueueType;
 
-void error(char* message) {
+void error(char *message)
+{
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
 
-void init_queue(QueueType* q) {
+void init_queue(QueueType *q)
+{
 	q->rear = 0;
 	q->front = 0;
 }
 
-int is_empty(QueueType* q) {
+int is_empty(QueueType *q)
+{
 	return (q->front == q->rear);
 }
 
-int is_full(QueueType* q) {
+int is_full(QueueType *q)
+{
 	return ((q->rear + 1) % MAX_QUEUE_SIZE == q->front);
 }
 
-void queue_print(QueueType* q) {
+void queue_print(QueueType *q)
+{
 	printf("QUEUE(front = %d rear = %d) = ", q->front, q->rear);
-	if (!is_empty(q)) {
+	if (!is_empty(q))
+	{
 		int i = q->front;
-		do {
+		do
+		{
 			i = (i + 1) % (MAX_QUEUE_SIZE);
 			printf("%d | ", q->data[i]);
-			if (i == q->rear) break;
+			if (i == q->rear)
+				break;
 		} while (i != q->front);
 	}
 	printf("\n");
 }
 
-void enqueue(QueueType* q, element item) {
-	if (is_full(q)) {
-		error("е╔╟║ фВх╜╩Себ ют╢о╢ы.");
+void enqueue(QueueType *q, element item)
+{
+	if (is_full(q))
+	{
+		error("М│░Й╟─ М▐╛М≥■Л┐│М┐° Л·┘К▀┬К▀╓.");
 	}
 	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
 	q->data[q->rear] = item;
 }
 
-element dequeue(QueueType* q) {
-	if(is_empty(q))
-		error("е╔╟║ ╟Ь╧И╩Себ ют╢о╢ы.");
+element dequeue(QueueType *q)
+{
+	if (is_empty(q))
+		error("М│░Й╟─ ЙЁ╣К╟╠Л┐│М┐° Л·┘К▀┬К▀╓.");
 	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
 	return q->data[q->front];
 }
 
-element peek(QueueType* q) {
+element peek(QueueType *q)
+{
 	if (is_empty(q))
-		error("е╔╟║ ╟Ь╧И╩Себ ют╢о╢ы.");
+		error("М│░Й╟─ ЙЁ╣К╟╠Л┐│М┐° Л·┘К▀┬К▀╓.");
 	return q->data[(q->front + 1) % MAX_QUEUE_SIZE];
 }
 
-int main() {
+int main()
+{
 	QueueType queue;
 	int element;
 
 	init_queue(&queue);
-	printf("---╣╔юлем цъ╟║ ╢э╟Х---\n");
-	while (!is_full(&queue)) {
-		printf("а╓╪Ж╦╕ ют╥бго╫ц©ю: ");
+	printf("---К█╟Л²╢М└╟ Л╤■Й╟─ К▀╗ЙЁ└---\n");
+	while (!is_full(&queue))
+	{
+		printf("Л═∙Л┬≤К╔╪ Л·┘К═╔М∙≤Л▀°Л≤╓: ");
 		scanf("%d", &element);
 		enqueue(&queue, element);
 		queue_print(&queue);
 	}
-	printf("е╔╢б фВх╜╩Себют╢о╢ы\n\n");
+	printf("М│░К┼■ М▐╛М≥■Л┐│М┐°Л·┘К▀┬К▀╓\n\n");
 
-	printf("---╣╔юлем ╩Ха╕ ╢э╟Х---\n");
+	printf("---К█╟Л²╢М└╟ Л┌╜Л═° К▀╗ЙЁ└---\n");
 	while (!is_empty(&queue))
 	{
 		element = dequeue(&queue);
-		printf("╡╗Ё╩аЬ а╓╪Ж: %d \n", element);
+		printf("Й╨╪К┌╢Л╖└ Л═∙Л┬≤: %d \n", element);
 		queue_print(&queue);
 	}
-	printf("е╔╢б ╟Ь╧И╩Себют╢о╢ы.\n");
+	printf("М│░К┼■ ЙЁ╣К╟╠Л┐│М┐°Л·┘К▀┬К▀╓.\n");
 	return 0;
 }
-*/

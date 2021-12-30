@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -7,54 +8,65 @@
 
 typedef int element;
 
-typedef struct {
+typedef struct
+{
 	element data[MAX_QUEUE_SIZE];
 	int front, rear;
-}QueueType;
+} QueueType;
 
-void error(char* message) {
+void error(char *message)
+{
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
 
-void init_queue(QueueType* q) {
+void init_queue(QueueType *q)
+{
 	q->front = q->rear = 0;
 }
 
-int is_empty(QueueType* q) {
+int is_empty(QueueType *q)
+{
 	return (q->front == q->rear);
 }
 
-int is_full(QueueType* q) {
+int is_full(QueueType *q)
+{
 	return ((q->rear + 1) % MAX_QUEUE_SIZE == q->front);
 }
 
-void enqueue(QueueType* q, element item) {
-	if (is_full(q)) {
-		error("Å¥°¡ Æ÷È­»óÅÂÀÔ´Ï´Ù.");
+void enqueue(QueueType *q, element item)
+{
+	if (is_full(q))
+	{
+		error("íê°€ í¬í™”ìƒíƒœì…ë‹ˆë‹¤.");
 	}
 	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
 	q->data[q->rear] = item;
 }
 
-element dequeue(QueueType* q) {
+element dequeue(QueueType *q)
+{
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù.");
+		error("íê°€ ê³µë°±ìƒíƒœì…ë‹ˆë‹¤.");
 	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
 	return q->data[q->front];
 }
 
-element peek(QueueType* q) {
+element peek(QueueType *q)
+{
 	if (is_empty(q))
-		error("Å¥°¡ °ø¹é»óÅÂÀÔ´Ï´Ù.");
+		error("íê°€ ê³µë°±ìƒíƒœì…ë‹ˆë‹¤.");
 	return q->data[(q->front + 1) % MAX_QUEUE_SIZE];
 }
 
-int get_count(QueueType* q) {
+int get_count(QueueType *q)
+{
 	return (q->rear - q->front);
 }
 
-int main() {
+int main()
+{
 	QueueType fibo;
 	init_queue(&fibo);
 
@@ -62,12 +74,13 @@ int main() {
 	enqueue(&fibo, 1);
 
 	int n;
-	printf("Ãâ·ÂÇÒ ÇÇº¸³ªÄ¡ ¼ö¿­ÀÇ °³¼ö ÀÔ·Â: ");
+	printf("ì¶œë ¥í•  í”¼ë³´ë‚˜ì¹˜ ìˆ˜ì—´ì˜ ê°œìˆ˜ ì…ë ¥: ");
 	scanf("%d", &n);
 
 	printf("%d ", fibo.data[1]);
 
-	for (int i = 2; i <= n; i++) {
+	for (int i = 2; i <= n; i++)
+	{
 		element f = fibo.data[1] + fibo.data[2];
 		dequeue(&fibo);
 		enqueue(&fibo, f);
