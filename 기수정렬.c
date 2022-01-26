@@ -8,7 +8,6 @@
 #define SIZE 10
 typedef int element;
 
-//원형 큐 구조체
 typedef struct
 {
     element data[MAX_QUEUE_SIZE];
